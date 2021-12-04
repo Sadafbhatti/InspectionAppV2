@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+       tools:context=".ShopActivity">
+
+    <com.google.android.material.textfield.TextInputLayout
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:layout_weight="1"
+        app:startIconCheckable="true"
+        app:boxBackgroundColor="@color/cardview_light_background"
+        android:hint="Shop Name"
+        app:boxBackgroundMode="filled">
+
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/txtshopName"
+        app:helperText="This is an helper text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="none|text"
+        android:minHeight="50dp"/>
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        app:startIconCheckable="true"
+        android:hint="Technician Name"
+        app:boxBackgroundMode="filled">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/txttechnName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="none|text"
+            android:minHeight="50dp"/>
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:startIconCheckable="true"
+        android:layout_weight="1"
+        android:hint="Inspection Date"
+        app:boxBackgroundMode="filled">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/txtinspectionDate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textCapCharacters"
+            android:minHeight="50dp"/>
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:startIconCheckable="true"
+        android:layout_weight="1"
+        android:hint="Shop Email"
+        app:boxBackgroundMode="filled">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/txtshopEmail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="number"
+            android:minHeight="50dp"/>
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:startIconCheckable="true"
+        android:layout_weight="1"
+        android:hint="Shop Phone"
+        app:boxBackgroundMode="filled"
+        >
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/txtshopPhone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="phone"
+            android:minHeight="50dp"/>
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:startIconCheckable="true"
+        android:layout_weight="1"
+        android:hint="Shop Address"
+        app:boxBackgroundMode="filled">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/txtShopaddress"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textCapCharacters"
+            android:minHeight="50dp"/>
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+ <LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:paddingTop="140dp">
+    <Button
+        android:id="@+id/btnToInspectionReport"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="Next"
+        android:onClick="OnClick"
+        android:padding="16dp" />
+
+</LinearLayout>
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_weight="1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:indeterminate="false"
+        android:progress="30"
+     />
+
+</LinearLayout>
