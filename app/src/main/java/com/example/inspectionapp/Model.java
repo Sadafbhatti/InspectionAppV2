@@ -1,5 +1,9 @@
 package com.example.inspectionapp;
 
+import android.os.Build;
+
+import androidx.annotation.RequiresApi;
+
 import java.util.ArrayList;
 import java.util.Objects;
 
@@ -99,17 +103,20 @@ public class Model {
                     '}';
         }
 
-        @Override
-        public boolean equals(Object o) {
-            if (this == o) return true;
-            if (!(o instanceof Results)) return false;
-            Results results = (Results) o;
-            return Objects.equals(getValue(), results.getValue()) && Objects.equals(getValueId(), results.getValueId()) && Objects.equals(getVariable(), results.getVariable()) && Objects.equals(getVariableId(), results.getVariableId());
-        }
+    }
 
-        @Override
-        public int hashCode() {
-            return Objects.hash(getValue(), getValueId(), getVariable(), getVariableId());
-        }
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Model)) return false;
+        Model model = (Model) o;
+        return Objects.equals(getCount(), model.getCount()) && Objects.equals(getMessage(), model.getMessage()) && Objects.equals(getSearchCriteria(), model.getSearchCriteria()) && Objects.equals(getResults(), model.getResults());
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+    @Override
+    public int hashCode() {
+        return Objects.hash(getCount(), getMessage(), getSearchCriteria(), getResults());
     }
 }

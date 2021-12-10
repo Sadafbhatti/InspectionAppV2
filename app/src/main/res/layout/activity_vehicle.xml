@@ -6,16 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:padding="16dp"
-    tools:context=".ShopActivity">
-
-    <com.google.android.material.textview.MaterialTextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Shop Information:"
-        android:layout_weight="1"
-        android:fontFamily="sans-serif-medium"
-        android:textSize="20sp">
-    </com.google.android.material.textview.MaterialTextView>
+       tools:context=".VehicleActivity">
 
     <com.google.android.material.textfield.TextInputLayout
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
@@ -23,16 +14,16 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         app:startIconCheckable="true"
-        app:boxBackgroundColor="@color/cardview_light_background"
-        android:hint="Shop Name"
+        android:hint="VIN #"
         app:boxBackgroundMode="outline">
 
     <com.google.android.material.textfield.TextInputEditText
-        android:id="@+id/txtshopName"
+        android:id="@+id/txtVin"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:inputType="none|text"
-        android:minHeight="50dp"/>
+        android:minHeight="50dp"
+        />
 
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -42,15 +33,15 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         app:startIconCheckable="true"
-        android:hint="Technician Name"
+        android:hint="Make"
         app:boxBackgroundMode="outline">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/txttechnName"
+            android:id="@+id/txtMake"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="none|text"
-            android:minHeight="50dp"/>
+            android:minHeight="50dp" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -60,11 +51,11 @@
         android:layout_height="wrap_content"
         app:startIconCheckable="true"
         android:layout_weight="1"
-        android:hint="Inspection Date"
+        android:hint="@string/model"
         app:boxBackgroundMode="outline">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/txtinspectionDate"
+            android:id="@+id/txtModel"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="textCapCharacters"
@@ -78,11 +69,11 @@
         android:layout_height="wrap_content"
         app:startIconCheckable="true"
         android:layout_weight="1"
-        android:hint="Shop Email"
+        android:hint="Mileage In"
         app:boxBackgroundMode="outline">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/txtshopEmail"
+            android:id="@+id/txtMileagein"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="number"
@@ -96,15 +87,33 @@
         android:layout_height="wrap_content"
         app:startIconCheckable="true"
         android:layout_weight="1"
-        android:hint="Shop Phone"
-        app:boxBackgroundMode="outline"
-        >
+        android:hint="Mileage Out"
+        app:endIconCheckable="true"
+        app:boxBackgroundMode="outline">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/txtshopPhone"
+            android:id="@+id/txtMileageout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="phone"
+            android:inputType="number"
+            />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:startIconCheckable="true"
+        android:layout_weight="1"
+        android:hint="Test Drive"
+        app:boxBackgroundMode="outline">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/txtTestdrive"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType=""
             android:minHeight="50dp"/>
 
     </com.google.android.material.textfield.TextInputLayout>
@@ -115,26 +124,26 @@
         android:layout_height="wrap_content"
         app:startIconCheckable="true"
         android:layout_weight="1"
-        android:hint="Shop Address"
+        android:hint="Plate #"
         app:boxBackgroundMode="outline">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/txtShopaddress"
+            android:id="@+id/txtPlate"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="textCapCharacters"
-            android:minHeight="50dp"/>
+            android:inputType="none|text"
+            android:minHeight="50dp" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
- <LinearLayout
+    <LinearLayout
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
     android:paddingTop="20dp">
     <Button
-        android:id="@+id/btnToInspectionReport"
-        android:layout_width="wrap_content"
+        android:id="@+id/btnToCustomer"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:text="Next"
@@ -150,7 +159,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:indeterminate="false"
-        android:progress="50"
+        android:progress="10"
      />
 
 </LinearLayout>
