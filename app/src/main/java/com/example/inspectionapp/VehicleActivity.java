@@ -23,7 +23,7 @@ public class VehicleActivity extends AppCompatActivity {
     public TextInputEditText txtMake,txtModel,txtVin,txtMileagein,txtMileageout,txtTestdrive,txtPlate;
    // String query="5UXWX7C5*BA"; // must be at least 8-17 chars of vehicle+"?format=json";
     String vin,make,  model,  mileagein,  mileageout,  testdrive,  plate="Not available";
-    Vehicle myVehicle;
+   // Vehicle myVehicle;
     NetworkManager myNetworkManager;
 
 // have a select all button..initialize with OK status and he can update as
@@ -41,7 +41,14 @@ public class VehicleActivity extends AppCompatActivity {
         txtTestdrive=findViewById(R.id.txtTestdrive);
         txtPlate=findViewById(R.id.txtPlate);
 
-         myNetworkManager=new NetworkManager();
+         myNetworkManager= ((myApp)getApplication()).getmyNetworkManager();
+        txtVin.setText(((myApp)getApplication()).getmyVehicle().getVin());
+        txtMake.setText(((myApp)getApplication()).getmyVehicle().getMake());
+        txtModel.setText(((myApp)getApplication()).getmyVehicle().getModel());
+        txtMileagein.setText(((myApp)getApplication()).getmyVehicle().getMileagein());
+        txtMileageout.setText(((myApp)getApplication()).getmyVehicle().getMileageout());
+        txtTestdrive.setText( ((myApp)getApplication()).getmyVehicle().getPlate());
+        txtPlate.setText(((myApp)getApplication()).getmyVehicle().getTestdrive());
     }
 
 
@@ -107,14 +114,24 @@ public class VehicleActivity extends AppCompatActivity {
             plate = (txtPlate.getText()).toString();
 
             // myVehicle=new Vehicle(vin,make,model,mileagein,mileageout,testdrive,plate);
-            myVehicle=new Vehicle();
-            myVehicle.setVin(vin);
-            myVehicle.setMake(make);
-            myVehicle.setModel(model);
-            myVehicle.setMileagein(mileagein);
-            myVehicle.setMileageout(mileageout);
-            myVehicle.setPlate(testdrive);
-            myVehicle.setTestdrive(testdrive);
+//            myVehicle=new Vehicle();
+//            myVehicle.setVin(vin);
+//            myVehicle.setMake(make);
+//            myVehicle.setModel(model);
+//            myVehicle.setMileagein(mileagein);
+//            myVehicle.setMileageout(mileageout);
+//            myVehicle.setPlate(testdrive);
+//            myVehicle.setTestdrive(testdrive);
+
+            ((myApp)getApplication()).getmyVehicle().setVin(vin);
+            ((myApp)getApplication()).getmyVehicle().setMake(make);
+            ((myApp)getApplication()).getmyVehicle().setModel(model);
+            ((myApp)getApplication()).getmyVehicle().setMileagein(mileagein);
+            ((myApp)getApplication()).getmyVehicle().setMileageout(mileageout);
+            ((myApp)getApplication()).getmyVehicle().setPlate(plate);
+            ((myApp)getApplication()).getmyVehicle().setTestdrive(testdrive);
+
+
 
         }
         catch (Exception e){

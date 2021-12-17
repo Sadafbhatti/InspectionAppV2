@@ -1,5 +1,8 @@
 package com.example.inspectionapp;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 public class Shop {
     String shopName;
     String technName;
@@ -8,7 +11,11 @@ public class Shop {
     String shopPhone;
     String shopAddress;
 
+    private String pattern = "dd-MM-yyyy";
     public Shop() {
+
+        String dateInString =new SimpleDateFormat(pattern).format(new Date());
+
         this.shopName = shopName;
         this.technName = technName;
         this.inspectionDate = inspectionDate;
@@ -17,6 +24,7 @@ public class Shop {
         this.shopAddress=shopAddress;
 
         shopName="Inspire1 Auto Sales & Auto Repair Shop";
+        inspectionDate=dateInString;
         technName="Ateeq Bhatti";
         shopEmail="inspire1autosales@gmail.com";
         shopPhone="416-735-3535";

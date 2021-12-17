@@ -14,7 +14,8 @@
         android:text="Shop Information:"
         android:layout_weight="1"
         android:fontFamily="sans-serif-medium"
-        android:textSize="20sp">
+        android:textSize="20sp"
+        android:textColor="#880E4F">
     </com.google.android.material.textview.MaterialTextView>
 
     <com.google.android.material.textfield.TextInputLayout
@@ -31,6 +32,7 @@
         android:id="@+id/txtshopName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:drawableLeft="@drawable/ic_businessbuilding"
         android:inputType="none|text"
         android:minHeight="50dp"/>
 
@@ -49,6 +51,7 @@
             android:id="@+id/txttechnName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/ic_personout"
             android:inputType="none|text"
             android:minHeight="50dp"/>
 
@@ -67,6 +70,7 @@
             android:id="@+id/txtinspectionDate"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/ic_datecalender"
             android:inputType="textCapCharacters"
             android:minHeight="50dp"/>
 
@@ -85,6 +89,7 @@
             android:id="@+id/txtshopEmail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/ic_emaileat"
             android:inputType="number"
             android:minHeight="50dp"/>
 
@@ -104,6 +109,7 @@
             android:id="@+id/txtshopPhone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/ic_phonenum"
             android:inputType="phone"
             android:minHeight="50dp"/>
 
@@ -122,6 +128,7 @@
             android:id="@+id/txtShopaddress"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/ic_location"
             android:inputType="textCapCharacters"
             android:minHeight="50dp"/>
 
@@ -136,6 +143,8 @@
         android:id="@+id/btnToInspectionReport"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingTop="20dp"
         android:layout_weight="1"
         android:text="Next"
         android:onClick="OnClick"

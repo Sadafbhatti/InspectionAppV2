@@ -5,6 +5,10 @@ public class Customer {
     String custPhone;
     String custEmail;
     String custReasonForInspection;
+
+    Customer(){
+
+    }
     public Customer(String custName, String custPhone, String custEmail, String custReasonForInspection) {
         this.custName = custName;
         this.custPhone = custPhone;

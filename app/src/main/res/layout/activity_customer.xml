@@ -16,7 +16,8 @@
         android:fontFamily="sans-serif-medium"
         android:text="Customer Information:"
         android:textColor="#880E4F"
-        android:textSize="20sp"></com.google.android.material.textview.MaterialTextView>
+        android:textSize="20sp">
+    </com.google.android.material.textview.MaterialTextView>
 
 
     <com.google.android.material.textfield.TextInputLayout
@@ -34,6 +35,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="none|text"
+            android:drawableLeft="@drawable/ic_personout"
             android:minHeight="50dp" />
 
     </com.google.android.material.textfield.TextInputLayout>
@@ -51,7 +53,8 @@
             android:id="@+id/txtCustphone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="none|text"
+            android:inputType="none|phone"
+            android:drawableLeft="@drawable/ic_phonenum"
             android:minHeight="50dp" />
 
     </com.google.android.material.textfield.TextInputLayout>
@@ -69,7 +72,9 @@
             android:id="@+id/txtCustemail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/ic_emaileat"
             android:inputType="textCapCharacters"
+
             android:minHeight="50dp" />
 
     </com.google.android.material.textfield.TextInputLayout>
@@ -88,6 +93,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="textMultiLine"
+            android:drawableLeft="@drawable/ic_note"
             android:lines="10"
             android:maxLines="15"
             android:minHeight="50dp" />

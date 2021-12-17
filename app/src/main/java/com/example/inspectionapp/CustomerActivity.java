@@ -22,6 +22,11 @@ public class CustomerActivity extends AppCompatActivity{
         txtCustemail=findViewById(R.id.txtCustemail);
         txtCustreason=findViewById(R.id.txtCustreason);
 
+        //set data from application
+        txtCustname.setText(((myApp)getApplication()).getmyCustomer().getCustName());
+        txtCustphone.setText(((myApp)getApplication()).getmyCustomer().getCustPhone());
+        txtCustemail.setText(((myApp)getApplication()).getmyCustomer().getCustEmail());
+        txtCustreason.setText(((myApp)getApplication()).getmyCustomer().getCustReasonForInspection());
 
     }
 
@@ -32,7 +37,12 @@ public class CustomerActivity extends AppCompatActivity{
             custPhone = Objects.requireNonNull(txtCustphone.getText()).toString();
             custEmail = Objects.requireNonNull(txtCustemail.getText()).toString();
             custReasonForInspection = Objects.requireNonNull(txtCustreason.getText()).toString();
-            myCustomer= new Customer(custName,custPhone,custEmail,custReasonForInspection);
+           // myCustomer= new Customer(custName,custPhone,custEmail,custReasonForInspection);
+
+            ((myApp)getApplication()).getmyCustomer().setCustName(custName);
+            ((myApp)getApplication()).getmyCustomer().setCustPhone(custPhone);
+            ((myApp)getApplication()).getmyCustomer().setCustEmail(custEmail);
+            ((myApp)getApplication()).getmyCustomer().setCustReasonForInspection(custReasonForInspection);
 
         }
         catch (Exception e){

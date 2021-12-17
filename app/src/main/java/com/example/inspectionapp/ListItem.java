@@ -1,10 +1,12 @@
 package com.example.inspectionapp;
 
 import android.graphics.Bitmap;
+import android.os.Parcel;
+import android.os.Parcelable;
 
 import java.util.ArrayList;
 
-public class ListItem {
+public class ListItem implements Parcelable {
     String itemID;
     String itemName;
     String findings;
@@ -16,6 +18,45 @@ public class ListItem {
 
 
     public ListItem() {
+    }
+
+
+    protected ListItem(Parcel in) {
+        itemID = in.readString();
+        itemName = in.readString();
+        findings = in.readString();
+        recommendations = in.readString();
+        notes = in.readString();
+        problemPic = in.readParcelable(Bitmap.class.getClassLoader());
+        itemStatus = in.readString();
+    }
+
+    public static final Creator<ListItem> CREATOR = new Creator<ListItem>() {
+        @Override
+        public ListItem createFromParcel(Parcel in) {
+            return new ListItem(in);
+        }
+
+        @Override
+        public ListItem[] newArray(int size) {
+            return new ListItem[size];
+        }
+    };
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(itemID);
+        dest.writeString(itemName);
+        dest.writeString(findings);
+        dest.writeString(recommendations);
+        dest.writeString(notes);
+        dest.writeParcelable(problemPic, flags);
+        dest.writeString(itemStatus);
     }
 
     public enum itemStatus {
@@ -33,6 +74,16 @@ public class ListItem {
         this.notes = notes;
         this.problemPic = problemPic;
     }
+    public ListItem(String itemName,String itemStatus, String findings, String recommendations,String notes) {
+        this.itemID=itemID;
+        this.itemName = itemName;
+        this.itemStatus = itemStatus;
+        this.findings = findings;
+        this.recommendations = recommendations;
+        this.notes = notes;
+        this.problemPic = problemPic;
+    }
+
     public ListItem(String itemName, String findings, String recommendations, String notes) {
         this.itemName = itemName;
         this.findings = findings;

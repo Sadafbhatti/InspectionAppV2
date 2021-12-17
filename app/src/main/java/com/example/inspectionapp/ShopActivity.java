@@ -11,7 +11,7 @@ import java.util.Objects;
 public class ShopActivity extends AppCompatActivity{
     public String shopName,  technName,  inspectionDate,  shopEmail,  shopPhone, shopAddress;
     public TextInputEditText txtshopName,  txttechnName,  txtinspectionDate,  txtshopEmail,  txtshopPhone,txtShopaddress;
-    public  Shop myShop;
+   // public  Shop myShop;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,13 +24,13 @@ public class ShopActivity extends AppCompatActivity{
         txtshopPhone=findViewById(R.id.txtshopPhone);
         txtShopaddress=findViewById(R.id.txtShopaddress);
 
-        myShop=new Shop();
-        txtshopName.setText(myShop.getShopName());
-        txttechnName.setText(myShop.getTechnName());
-        txtinspectionDate.setText(myShop.getInspectionDate());
-        txtshopEmail.setText(myShop.getShopEmail());
-        txtshopPhone.setText(myShop.getShopPhone());
-        txtShopaddress.setText(myShop.getShopName());
+       // myShop=new Shop();
+        txtshopName.setText(((myApp)getApplication()).getmyShop().getShopName().toString());
+        txttechnName.setText(((myApp)getApplication()).getmyShop().getTechnName().toString());
+        txtinspectionDate.setText(((myApp)getApplication()).getmyShop().getInspectionDate().toString());
+        txtshopEmail.setText(((myApp)getApplication()).getmyShop().getShopEmail().toString());
+        txtshopPhone.setText(((myApp)getApplication()).getmyShop().getShopPhone().toString());
+        txtShopaddress.setText(((myApp)getApplication()).getmyShop().getShopAddress().toString());
 
     }
     public void setShop() {
@@ -43,7 +43,14 @@ public class ShopActivity extends AppCompatActivity{
             shopEmail = Objects.requireNonNull(txtshopEmail.getText()).toString();
             shopPhone = Objects.requireNonNull(txtshopPhone.getText()).toString();
             shopAddress = Objects.requireNonNull(txtShopaddress.getText()).toString();
-            myShop= new Shop(shopName,technName,inspectionDate,shopEmail,shopPhone,shopAddress);
+          //  myShop= new Shop(shopName,technName,inspectionDate,shopEmail,shopPhone,shopAddress);
+           ((myApp)getApplication()).getmyShop().setShopAddress(shopName);
+            ((myApp)getApplication()).getmyShop().setTechnName(technName);
+            ((myApp)getApplication()).getmyShop().setInspectionDate(inspectionDate);
+            ((myApp)getApplication()).getmyShop().setShopEmail(shopEmail);
+            ((myApp)getApplication()).getmyShop().setShopPhone(shopPhone);
+            ((myApp)getApplication()).getmyShop().setShopAddress(shopAddress);
+
 
         }
         catch (Exception e){

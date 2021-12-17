@@ -5,6 +5,14 @@
     <string name="start_inspection_report">Start Inspection Report</string>
     <string name="todo">TODO</string>
     <string name="status">Status</string>
+    <string name="text_view">Text View</string>
+    <string name="detail_checklist_item_information">Detail Checklist Item Information:</string>
+    <string name="finding">Finding:</string>
+    <string name="recommendations">Recommendations:</string>
+    <string name="notes">Notes:</string>
+    <string name="upload_picture">Upload Picture:</string>
+    <string name="save">Save</string>
+    <string name="isseimage">isseimage</string>
 
 </resources>
 

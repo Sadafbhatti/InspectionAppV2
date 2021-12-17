@@ -1,191 +1,172 @@
 package com.example.inspectionapp;
 
+import static com.example.inspectionapp.VehicleActivity.TAG;
+
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.provider.SyncStateContract;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
+import android.widget.TextView;
+import android.widget.Toast;
 
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.ColorRes;
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
-
 import com.google.android.material.textfield.TextInputEditText;
+
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
 
-public class ChecklistActivity extends AppCompatActivity {
-    Checklist mylist;
-    ArrayList mylist1;
-    ListView listView;
-    int position=-1;
+public class ChecklistActivity extends AppCompatActivity implements View.OnClickListener{
+    Checklist mychecklist;
+    ListView simpleList;
+    TextView taskname;
+    Button taskstatus, btnfinish;
+    CheckListActivityAdapter customAdapter;
+    private int selectedItemIndex =-100;
+
+    // Create lanucher variable inside onAttach or onCreate or global
+    ActivityResultLauncher<Intent> launchlistItems = registerForActivityResult(
+            new ActivityResultContracts.StartActivityForResult(),
+            new ActivityResultCallback<ActivityResult>() {
+                @Override
+                public void onActivityResult(ActivityResult result) {
+                    if (result.getResultCode() == Activity.RESULT_OK) {
+                        Intent data = result.getData();
+                        // your operation....
+                    }
+                }
+            });
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_checklist);
-        mylist=new Checklist();
 
-       ArrayList arrayList=mylist.listItem;
+        btnfinish= findViewById(R.id.btnfinish);
+        // part of list_row_items button called btnStatus and textview txtItemName
+        taskstatus = (Button)findViewById(R.id.btnStatus);
+        taskname = (TextView)findViewById(R.id.txtItemName);
+        simpleList = (ListView) findViewById(R.id.mylistview);
 
-
-       // mylist= myChecklist.getListItem();
-        listView=findViewById(R.id.mylistview);
-
-        ArrayAdapter arrayAdapter=new ArrayAdapter(getApplicationContext(),android.R.layout.simple_list_item_1, arrayList);
-        listView.setAdapter(arrayAdapter);
-
-
-        // Now create the instance of the NumebrsViewAdapter and pass
-        // the context and arrayList created above
-  //      CheckListActivityAdapter numbersArrayAdapter = new CheckListActivityAdapter(this, arrayList);
-
-        // create the instance of the ListView to set the numbersViewAdapter
-    //    ListView checklistitemsListview = findViewById(R.id.mylistview);
-
-        // set the numbersViewAdapter for ListView
-    //    checklistitemsListview.setAdapter(numbersArrayAdapter);
-
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        customAdapter = new CheckListActivityAdapter(getApplicationContext(),((myApp)getApplication()).getChecklist().listItem);
+        simpleList.setAdapter(customAdapter);
+        System.out.println("*********Before onItemClick: I got here ********************* ");
+        simpleList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                 mylist.listItem.get(position).getItemName().toString();
-           //     System.out.println(myChecklist.getListItem().get(position).itemName);
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+               // Object item = customAdapter.getItem(i);
+                String info=((myApp)getApplication()).getChecklist().listItem.get(i).getItemName();
+                String status=((myApp)getApplication()).getChecklist().listItem.get(i).getItemStatus();
+                System.out.println("info for setText error:"+info);
 
-                Intent contentIntent = new Intent(getApplicationContext(), ListItemActivity.class);
-                Bundle bundle = new Bundle();
-              //  bundle.putString("findings", myChecklist.getFindings());
-                //bundle.putString("recomendations", postItem.getContent());
-                //bundle.putString("notes", postItem.currentDateTimeString());
-                contentIntent.putExtras(bundle);
-                startActivity(contentIntent);
+                try {
+                 //   taskname.setText( "info");
+                 //   taskstatus.setText("status");
+                    System.out.println("im skipping setting taskname and task status");
+                }
+                catch (Exception e){
+                    System.out.println("*********Caught error with setting text *********"+e);
+                }
+        finally{
+                    selectedItemIndex = i;
+                    Intent toItemInList = new Intent(getApplicationContext(), ListItemActivity.class);
+                    toItemInList.putExtra("selectedIndex", selectedItemIndex);
+                    toItemInList.putExtra("ItemName", ((myApp)getApplication()).getChecklist().listItem.get(i).getItemName());
+                    toItemInList.putExtra("ItemStatus", ((myApp)getApplication()).getChecklist().listItem.get(i).getItemStatus());
+                    //startActivity(toItemInList);
+
+                  //  Intent intent = new Intent(getApplicationContext(), ListItemActivity.class));
+                    launchlistItems.launch(toItemInList);
+
+                }
+            }
+        });
+
+        //registering finish button onclick event
+        btnfinish.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //convert all data to a PDF page and send email
+
+                convertDataToPDFReport();
+
+                // and send email
+                //save all data to a room database
+
             }
         });
     }
-    public void setShop() {
-        try {
-            //label
-            //textfield
-          //  myChecklist= new Checklist();
 
-        }
-        catch (Exception e){
-            System.out.println("Error: Fields are empty");
-        }
-
-    }
-    public void OnClick(View view) {
-       // setChecklist();
-        Intent toItemInList = new Intent(getApplicationContext(),ListItemActivity.class);
-        startActivity(toItemInList);
+    private void convertDataToPDFReport() {
 
     }
 
 
+    /** A callback method, which is executed when the activity is recreated
+     * ( eg :  Configuration changes : portrait -> landscape )
+     */
+//    @Override
+//    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+//
+//        taskstatus = (Button)findViewById(R.id.btnStatus);
+//        taskname = (TextView)findViewById(R.id.txtItemName);
+//        taskstatus.setText(savedInstanceState.getString("btnstatus"));
+//        taskname.setText(savedInstanceState.getString("btnitemname"));
+//
+//        super.onRestoreInstanceState(savedInstanceState);
+//    }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        customAdapter.notifyDataSetChanged();
+    }
+    /** A callback method, which is executed when this activity is about to be killed
+     * This is used to save the current state of the activity
+     * ( eg :  Configuration changes : portrait -> landscape )
+     */
+
+    @Override
+    protected void onSaveInstanceState(@NonNull Bundle outState) {
+        outState.putParcelableArrayList("mylistitems",((myApp)getApplication()).getChecklist().listItem);
+
+        taskstatus = (Button)findViewById(R.id.btnStatus);
+        taskname = (TextView)findViewById(R.id.txtItemName);
+//        outState.putParcelableArrayList();taskstatus.setText(savedInstanceState.getString("btnstatus"));
+//        outState.getSerializable(taskname.getText(savedInstanceState.getString("btnitemname"));
+//
+        super.onSaveInstanceState(outState);
+        outState.putInt("selectedindex", selectedItemIndex);
+        //create an app level class that contains all those objects ..when finished acces class  store checklist NOT IN STATIC MODE FOR EMAIL CREATE AN INTENT -- EMAIL CODE rANIA WILL SEND LINK
+        //COMPOSE EMAIL WITH OPTIONAL ATTACHMENTS ..SEND TO MULTIPLE USERS..IN LINK
+        //}
+        //
+    }
+    @Override
+    public void onClick(View v) {
+
+    }
 }
 
-
-
-
-/*TextView imgPath;
-    private static final int PICK_IMAGE_REQUEST = 9544;
-    ImageView image;
-    Uri selectedImage;
-    String part_image;
-
-    // Permissions for accessing the storage
-    private static final int REQUEST_EXTERNAL_STORAGE = 1;
-    private static String[] PERMISSIONS_STORAGE = {
-            Manifest.permission.READ_EXTERNAL_STORAGE,
-            Manifest.permission.WRITE_EXTERNAL_STORAGE
-    };
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.upload);
-        imgPath = findViewById(R.id.item_img);
-        image = findViewById(R.id.img);
-    }
-
-    // Method for starting the activity for selecting image from phone storage
-    public void pick(View view) {
-        verifyStoragePermissions(Upload.this);
-        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
-        intent.setType("image/*");
-        startActivityForResult(Intent.createChooser(intent, "Open Gallery"), PICK_IMAGE_REQUEST);
-    }
-
-    // Method to get the absolute path of the selected image from its URI
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == PICK_IMAGE_REQUEST) {
-            if (resultCode == RESULT_OK) {
-                selectedImage = data.getData();                                                         // Get the image file URI
-                String[] imageProjection = {MediaStore.Images.Media.DATA};
-                Cursor cursor = getContentResolver().query(selectedImage, imageProjection, null, null, null);
-                if(cursor != null) {
-                    cursor.moveToFirst();
-                    int indexImage = cursor.getColumnIndex(imageProjection[0]);
-                    part_image = cursor.getString(indexImage);
-                    imgPath.setText(part_image);                                                        // Get the image file absolute path
-                    Bitmap bitmap = null;
-                    try {
-                        bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), selectedImage);
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                    image.setImageBitmap(bitmap);                                                       // Set the ImageView with the bitmap of the image
-                }
-            }
-        }
-    }
-
-    // Upload the image to the remote database
-    public void uploadImage(View view) {
-        File imageFile = new File(part_image);                                                          // Create a file using the absolute path of the image
-        RequestBody reqBody = RequestBody.create(MediaType.parse("multipart/form-file"), imageFile);
-        MultipartBody.Part partImage = MultipartBody.Part.createFormData("file", imageFile.getName(), reqBody);
-        API api = RetrofitClient.getInstance().getAPI();
-        Call<ResponseBody> upload = api.uploadImage(partImage);
-        upload.enqueue(new Callback<ResponseBody>() {
-            @Override
-            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                if(response.isSuccessful()) {
-                    Toast.makeText(Upload.this, "Image Uploaded", Toast.LENGTH_SHORT).show();
-                    Intent main = new Intent(Upload.this, MainActivity.class);
-                    main.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                    startActivity(main);
-                }
-            }
-
-            @Override
-            public void onFailure(Call<ResponseBody> call, Throwable t) {
-                Toast.makeText(Upload.this, "Request failed", Toast.LENGTH_SHORT).show();
-            }
-        });
-    }
-
-    public static void verifyStoragePermissions(Activity activity) {
-        // Check if we have write permission
-        int permission = ActivityCompat.checkSelfPermission(activity, Manifest.permission.WRITE_EXTERNAL_STORAGE);
-
-        if (permission != PackageManager.PERMISSION_GRANTED) {
-            // We don't have permission so prompt the user
-            ActivityCompat.requestPermissions(
-                    activity,
-                    PERMISSIONS_STORAGE,
-                    REQUEST_EXTERNAL_STORAGE
-            );
-        }
-    }*/
 
