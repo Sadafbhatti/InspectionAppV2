@@ -10,7 +10,6 @@ import java.util.Objects;
 public class CustomerActivity extends AppCompatActivity{
     String custName,  custPhone,  custEmail,  custReasonForInspection;
     public TextInputEditText txtCustname,txtCustphone,txtCustemail,txtCustreason;
-    Customer myCustomer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,10 +22,10 @@ public class CustomerActivity extends AppCompatActivity{
         txtCustreason=findViewById(R.id.txtCustreason);
 
         //set data from application
-        txtCustname.setText(((myApp)getApplication()).getmyCustomer().getCustName());
-        txtCustphone.setText(((myApp)getApplication()).getmyCustomer().getCustPhone());
-        txtCustemail.setText(((myApp)getApplication()).getmyCustomer().getCustEmail());
-        txtCustreason.setText(((myApp)getApplication()).getmyCustomer().getCustReasonForInspection());
+        txtCustname.setText(myApp.getInstance().getmyCustomer().getCustName());
+        txtCustphone.setText(myApp.getInstance().getmyCustomer().getCustPhone());
+        txtCustemail.setText(myApp.getInstance().getmyCustomer().getCustEmail());
+        txtCustreason.setText(myApp.getInstance().getmyCustomer().getCustReasonForInspection());
 
     }
 
@@ -39,14 +38,14 @@ public class CustomerActivity extends AppCompatActivity{
             custReasonForInspection = Objects.requireNonNull(txtCustreason.getText()).toString();
            // myCustomer= new Customer(custName,custPhone,custEmail,custReasonForInspection);
 
-            ((myApp)getApplication()).getmyCustomer().setCustName(custName);
-            ((myApp)getApplication()).getmyCustomer().setCustPhone(custPhone);
-            ((myApp)getApplication()).getmyCustomer().setCustEmail(custEmail);
-            ((myApp)getApplication()).getmyCustomer().setCustReasonForInspection(custReasonForInspection);
+            myApp.getInstance().getmyCustomer().setCustName(custName);
+            myApp.getInstance().getmyCustomer().setCustPhone(custPhone);
+            myApp.getInstance().getmyCustomer().setCustEmail(custEmail);
+            myApp.getInstance().getmyCustomer().setCustReasonForInspection(custReasonForInspection);
 
         }
         catch (Exception e){
-            System.out.println("Error: Fields are empty");
+            System.out.println("Error: one of the required fields are empty!");
         }
 
     }

@@ -20,7 +20,33 @@
 
         <uses-library
             android:name="org.apache.http.legacy"
-            android:required="false" />
+            android:required="true" />
+
+        <activity
+            android:label="Update Room DB Data"
+            android:name=".UpdateData"
+            android:exported="false"
+            android:parentActivityName=".GetData" />
+
+        <activity
+            android:label="Get Room DB Data"
+            android:name=".GetData"
+            android:exported="false"
+            android:parentActivityName=".MainActivity2" />
+
+
+        <activity
+            android:label="Room DB Customer Class"
+            android:name=".MainActivity2"
+            android:exported="false"
+            android:parentActivityName=".MainActivity" />
+
+
+        <activity
+            android:label="SavedItems Recyclerview Roomdb"
+            android:name=".savedActivity"
+            android:exported="false"
+            android:parentActivityName=".ListItemActivity" />
 
         <activity
             android:label="Detail Inspection Item"
@@ -31,7 +57,14 @@
             android:label="Vehicle Inspection Checklist"
             android:name=".ChecklistActivity"
             android:exported="false"
-            android:parentActivityName=".ShopActivity" />
+            android:parentActivityName=".ShopActivity">
+        <intent-filter>
+            <action android:name="android.intent.action.SENDTO" />
+            <data android:scheme="mailto" />
+            <category android:name="android.intent.category.DEFAULT" />
+        </intent-filter>
+        </activity>
+
         <activity
             android:label="Shop Info"
             android:name=".ShopActivity"

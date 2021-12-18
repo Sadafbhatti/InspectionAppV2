@@ -4,15 +4,20 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Users/sadaf/StudioProjects/InspectionApp/app/src/main/res/drawable/no_image.xml" value="0.19658119658119658" />
+        <entry key="..\:/Users/sadaf/StudioProjects/InspectionApp/app/src/main/res/layout-v21/activity_get_data.xml" value="0.10683760683760683" />
         <entry key="..\:/Users/sadaf/StudioProjects/InspectionApp/app/src/main/res/layout-v21/activity_list_item.xml" value="0.21927083333333333" />
+        <entry key="..\:/Users/sadaf/StudioProjects/InspectionApp/app/src/main/res/layout-v21/activity_saved.xml" value="0.4" />
+        <entry key="..\:/Users/sadaf/StudioProjects/InspectionApp/app/src/main/res/layout-v21/savedlist_row_items.xml" value="0.1799145299145299" />
         <entry key="..\:/Users/sadaf/StudioProjects/InspectionApp/app/src/main/res/layout/activity_checklist.xml" value="0.2" />
         <entry key="..\:/Users/sadaf/StudioProjects/InspectionApp/app/src/main/res/layout/activity_customer.xml" value="0.25" />
-        <entry key="..\:/Users/sadaf/StudioProjects/InspectionApp/app/src/main/res/layout/activity_list_item.xml" value="0.264" />
+        <entry key="..\:/Users/sadaf/StudioProjects/InspectionApp/app/src/main/res/layout/activity_list_item.xml" value="0.1" />
         <entry key="..\:/Users/sadaf/StudioProjects/InspectionApp/app/src/main/res/layout/activity_main.xml" value="0.264" />
         <entry key="..\:/Users/sadaf/StudioProjects/InspectionApp/app/src/main/res/layout/activity_main2.xml" value="0.1" />
         <entry key="..\:/Users/sadaf/StudioProjects/InspectionApp/app/src/main/res/layout/activity_shop.xml" value="0.1946564885496183" />
+        <entry key="..\:/Users/sadaf/StudioProjects/InspectionApp/app/src/main/res/layout/activity_update_data.xml" value="0.10683760683760683" />
         <entry key="..\:/Users/sadaf/StudioProjects/InspectionApp/app/src/main/res/layout/activity_vehicle.xml" value="0.264" />
         <entry key="..\:/Users/sadaf/StudioProjects/InspectionApp/app/src/main/res/layout/list_row_items.xml" value="0.264" />
+        <entry key="..\:/Users/sadaf/StudioProjects/InspectionApp/app/src/main/res/layout/rv_layout.xml" value="0.10683760683760683" />
         <entry key="..\:/Users/sadaf/StudioProjects/InspectionApp/app/src/main/res/menu/menu.xml" value="0.21927083333333333" />
         <entry key="..\:/Users/sadaf/StudioProjects/InspectionApp/app/src/main/res/xml/network_security_config.xml" value="0.1" />
       </map>

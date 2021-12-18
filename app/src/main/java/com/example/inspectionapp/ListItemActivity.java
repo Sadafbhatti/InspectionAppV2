@@ -4,6 +4,7 @@ import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.DrawableRes;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -32,6 +33,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.google.android.material.textfield.TextInputEditText;
 
 import org.bouncycastle.util.test.Test;
@@ -41,88 +43,76 @@ import java.io.FileDescriptor;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.Objects;
+import java.util.concurrent.ExecutionException;
 
 import retrofit2.http.Tag;
 
 public class ListItemActivity extends AppCompatActivity {
 
-    private static final int REQUEST_CODE = 200;
     int selectedItemIndex;
     TextInputEditText txtFinding,txtRecommendation,txtNotes;
     TextView txtitemnametitle;
-    Bitmap ProblemImgbitmap,problemPic;
-    String ItemName,ItemStatus, picturePath,finding,recomendation,notes;
-    String TESTNOTES;
-    //Checklist Checklist.ListItem;
+    Bitmap problemPic;
+    String ItemName,ItemStatus,finding,recomendation,notes;
     String TAG="MY TAG";
-
-    // One Button
+    // two Buttons
     Button btnSelectImage,btnSave;
-
     // One Preview Image
     ImageView IVPreviewImage;
 
     // constant to compare
     // the activity result code
+    int REQUEST_CODE=200;
+    public static int RC_PHOTO_PICKER = 0;
     int SELECT_PICTURE = 200;
     private File imageFile;
     private long maxImageSize=100; //100kb
     private ImageSwitcher imagePost;
     private Uri imageUri, selectedImageUri ;
+    Bitmap bitmap;
+
+    ActivityResultLauncher<Intent>  openGalleryForImageResultLauncher = registerForActivityResult(
+            new ActivityResultContracts.StartActivityForResult(),
+            new ActivityResultCallback<ActivityResult>() {
+                @Override
+                public void onActivityResult(ActivityResult result) {
+                    if (result.getResultCode() == Activity.RESULT_OK) {
+                        // There are no request codes
+                        Intent data = result.getData();
+                        Uri uri = data.getData();
+                        //ImageView imageView = R.id.img;
+                        IVPreviewImage.setImageURI(uri);
+
+                     //--   Glide.with(IVPreviewImage.getContext()).asBitmap().load(uri).into(IVPreviewImage);
+                    //    if(data != null && data.getExtras() != null){
+                        //   Bitmap photoBitmap = (Bitmap) data.getExtras().get("data");
+                        // bitmap = convertBitmap(uri.toString());
+
+                       // if (photoBitmap != null) {
+                             //   myApp.getInstance().getChecklist().listItem.get(selectedItemIndex).setProblemPic(bitmap);
+                               // problemPic=bitmap;
 
 
-//    ActivityResultLauncher<Intent> launchCameraActivity = registerForActivityResult(
-//            new ActivityResultContracts.StartActivityForResult(),
-//            new ActivityResultCallback<ActivityResult>() {
-//                @Override
-//                public void onActivityResult(ActivityResult result) {
-//                    if (result.getResultCode() == Activity.RESULT_OK) {
-//                        Intent data = result.getData();
-//                        Bitmap photoBitmap;
-//                        if(data != null && data.getExtras() != null){
-//                            photoBitmap = (Bitmap) data.getExtras().get("data");
-//                            if (photoBitmap != null) {
-//                                ((myApp)getApplication()).getChecklist().listItem.get(selectedItemIndex).setProblemPic(photoBitmap);
-//                                ((myApp)getApplication()).getChecklist().listItem.get(selectedItemIndex).setProblemPic(ProblemImgbitmap);
-//                                // dataModel.setPhoto(ImageUtil.convert(photoBitmap));
-//                               // imageTaken.setVisibility(View.VISIBLE);
-//                                //imageTaken.setImageBitmap(photoBitmap);
-//                            }
-//
-//                        }
-//                    }
-//                }
-//            });
-
-//    ActivityResultLauncher<Intent> launchCameraAndGalleryActivity = registerForActivityResult(
-//            new ActivityResultContracts.StartActivityForResult(),
-//            new ActivityResultCallback<ActivityResult>() {
-//                @Override
-//                public void onActivityResult(ActivityResult result) {
-//                    if (result.getResultCode() == Activity.RESULT_OK) {
-//
-//                        Intent data = result.getData();
-//                        Uri imageUri;
-//                        if (data != null) {
-//                            imageUri = data.getData();
-//                            InputStream imageStream;
-//                            try {
-//                                imageStream = getContentResolver().openInputStream(imageUri);
-//                                Bitmap photoBitmap = BitmapFactory.decodeStream(imageStream);
-//                               // dataModel.setOtherImage(ImageUtil.convert(photoBitmap));
-//                               // documentImageTaken.setVisibility(View.VISIBLE);
-//                               // documentImageTaken.setImageBitmap(photoBitmap);
-//                            }catch (FileNotFoundException e) {
-//                                e.printStackTrace();
-//                            }
-//                        }
-//                    }
-//                }
-//            });
-
-
+                                InputStream imageStream = null;
+                                try{
+                                    imageStream = getContentResolver().openInputStream(uri);
+                                    problemPic = BitmapFactory.decodeStream(imageStream);
+                                }
+                                catch (FileNotFoundException e){
+                                    e.printStackTrace();
+                                }
+                        try {
+                            imageStream.close();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }}
+                  //  }
+              //  }
+            });
 
 
     @Override
@@ -134,7 +124,9 @@ public class ListItemActivity extends AppCompatActivity {
         ActivityCompat.requestPermissions(ListItemActivity.this,
                 new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
                 REQUEST_CODE);
-        setContentToItems(selectedItemIndex);
+       setContentToItems(selectedItemIndex);
+
+       // IVPreviewImage.setImageBitmap(problemPic);
 
 
         btnSave=findViewById(R.id.btnSave);
@@ -146,18 +138,15 @@ public class ListItemActivity extends AppCompatActivity {
         IVPreviewImage=(ImageView) findViewById(R.id.img);
 
         // IVPreviewImage.setImageBitmap(convertImageViewToBitmap(IVPreviewImage));
-        if (IVPreviewImage.getDrawable()!=null) {
-            ProblemImgbitmap = ((BitmapDrawable) IVPreviewImage.getDrawable()).getBitmap();
-        }
+//        if (IVPreviewImage.getDrawable()!=null) {
+//            problemPic = ((BitmapDrawable) IVPreviewImage.getDrawable()).getBitmap();
+//        }
         txtitemnametitle=(TextView) findViewById(R.id.txtitemnametitle);
 
         Intent fromChecklistintent = getIntent();
 
         if (savedInstanceState!=null){
             selectedItemIndex= savedInstanceState.getInt("currentIndex");
-            TESTNOTES=savedInstanceState.getString("TESTNOTES");
-            txtNotes.setText(TESTNOTES);
-
             // sets if any data saved in obj
       //      setContentToItems(selectedItemIndex);
         }else {
@@ -175,7 +164,8 @@ public class ListItemActivity extends AppCompatActivity {
         btnSelectImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                imageChooser();
+                openGalleryForImage(v);
+
             }
         });
 
@@ -185,32 +175,24 @@ public class ListItemActivity extends AppCompatActivity {
                 finding=txtFinding.getText().toString();
                 recomendation=txtRecommendation.getText().toString();
                 notes=txtNotes.getText().toString();
-                TESTNOTES=notes;
-                problemPic=ProblemImgbitmap;
 
                 savetoObj(selectedItemIndex);
-                // image quality reduced
-                Toast.makeText(ListItemActivity.this, "before image is reduced to lower res!", Toast.LENGTH_LONG).show();
-                saveBitmapToFile();
+                Toast.makeText(ListItemActivity.this, "You selected an image!", Toast.LENGTH_LONG).show();
 
+                Intent intent=new Intent(getApplication(),savedActivity.class);
+                startActivity(intent);
             }
         });
-
 
     }
 
     private void setContentToItems(int selectedItemIndex) {
     try {
        // taking whatever obj has saved already and setting it to the fields
-//        txtFinding.setText(Objects.requireNonNull((myApp)getApplication()).getChecklist().listItem.get(selectedItemIndex).getFindings());
-//        txtRecommendation.setText(Objects.requireNonNull((myApp)getApplication()).getChecklist().listItem.get(selectedItemIndex).getRecommendations());
-//        txtNotes.setText(Objects.requireNonNull((myApp)getApplication()).getChecklist().listItem.get(selectedItemIndex).getNotes());
-//        IVPreviewImage.setImageBitmap(Objects.requireNonNull((myApp)getApplication()).getChecklist().listItem.get(selectedItemIndex).getProblemPic());
-        txtFinding.setText( ((myApp)getApplication()).getChecklist().listItem.get(selectedItemIndex).getFindings());
-        txtRecommendation.setText(((myApp)getApplication()).getChecklist().listItem.get(selectedItemIndex).getRecommendations());
-        txtNotes.setText(((myApp)getApplication()).getChecklist().listItem.get(selectedItemIndex).getNotes());
-        IVPreviewImage.setImageBitmap(Objects.requireNonNull((myApp)getApplication()).getChecklist().listItem.get(selectedItemIndex).getProblemPic());
-
+        txtFinding.setText(Objects.requireNonNull(myApp.getInstance().getChecklist().listItem.get(selectedItemIndex).getFindings()));
+        txtRecommendation.setText(Objects.requireNonNull(myApp.getInstance().getChecklist().listItem.get(selectedItemIndex).getRecommendations()));
+        txtNotes.setText(Objects.requireNonNull(myApp.getInstance().getChecklist().listItem.get(selectedItemIndex).getNotes()));
+       IVPreviewImage.setImageBitmap(Objects.requireNonNull(myApp.getInstance().getChecklist().listItem.get(selectedItemIndex).getProblemPic()));
 
     }
     catch (Exception e){
@@ -218,227 +200,64 @@ public class ListItemActivity extends AppCompatActivity {
     }
     }
 
+    private Bitmap convertBitmap(final String uri)
+    {
+        final Bitmap[] bitmap = {null};
+        Thread task = new Thread()
+        {
+            @Override
+            public void run()
+            {
+                try {
+                    bitmap[0] =   Glide.with(getApplicationContext()).asBitmap().load(Uri.parse(uri)).into(100,100).get();
+                } catch (InterruptedException | ExecutionException e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+
+        task.start();
+        return bitmap[0];
+    }
     // this function is triggered when
     // the Select Image Button is clicked
-    void imageChooser() {
-        // create an instance of the
-        // intent of the type image
-        Intent i = new Intent();
-        i.setType("image/*");
-        i.setAction(Intent.ACTION_GET_CONTENT);
-        // pass the constant to compare it
-        // with the returned requestCode
-        startActivityForResult(Intent.createChooser(i, "Select Picture"), SELECT_PICTURE);
-    }
-
-
-    // this function is triggered when user
-    // selects the image from the imageChooser
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        if (resultCode == RESULT_OK) {
-            // compare the resultCode with the
-            // SELECT_PICTURE constant
-            if (requestCode == SELECT_PICTURE) {
-
-                // Get the url of the image from data
-                selectedImageUri = data.getData();
-                String picturePath = getPath( ListItemActivity.this, selectedImageUri );
-                Log.d("Picture Path", picturePath);
-                if (null != selectedImageUri) {
-                    // update the preview image in the layout
-                    IVPreviewImage.setImageURI(selectedImageUri);
-                }
-
-                try {
-                    Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), selectedImageUri);
-                    // Log.d(TAG, String.valueOf(bitmap));
-
-                    ImageView imageView = (ImageView) findViewById(R.id.img);
-                    imageView.setImageBitmap(bitmap);
-                    imageView.setVisibility(View.VISIBLE);
-                }
-                catch (Exception e){
-                    System.out.println(e);
-                }
-            }
-        }
-    }
-
-    public static String getPath(Context context, Uri uri ) {
-        String result = null;
-        String[] proj = { MediaStore.Images.Media.DATA };
-        Cursor cursor = context.getContentResolver( ).query( uri, proj, null, null, null );
-        if(cursor != null){
-            if ( cursor.moveToFirst( ) ) {
-                int column_index = cursor.getColumnIndexOrThrow( proj[0] );
-                result = cursor.getString( column_index );
-            }
-            cursor.close( );
-        }
-        if(result == null) {
-            result = "Not found";
-        }
-        return result;
-    }
-    private void savetoObj(int selectedItemIndex) {
-
-        // saving UI info to the obj
-        Toast.makeText(this, " Info being taken from fields into obj:"+selectedItemIndex+finding+recomendation+notes, Toast.LENGTH_SHORT).show();
-
-        // taking input edits from user inputtextfields and save to obj
-        ((myApp)getApplication()).getChecklist().listItem.get(selectedItemIndex).setNotes(notes);
-        ((myApp)getApplication()).getChecklist().listItem.get(selectedItemIndex).setRecommendations(recomendation);
-        ((myApp)getApplication()).getChecklist().listItem.get(selectedItemIndex).setFindings(finding);
-        ((myApp)getApplication()).getChecklist().listItem.get(selectedItemIndex).setItemStatus(ItemStatus);
-        ((myApp)getApplication()).getChecklist().listItem.get(selectedItemIndex).setProblemPic(problemPic);
-        System.out.println("***ListItemActivity savetoObj *****"+((myApp)getApplication()).getChecklist().listItem.get(selectedItemIndex).getNotes());
-        System.out.println("***ListItemActivity savetoObj *****"+((myApp)getApplication()).getChecklist().listItem.get(selectedItemIndex).getRecommendations());
-
-        // myList.get(3).setEmail("new email");
-
-         //instead of dissmiss call listernet to call back to notify and refresh activity ..after call listner dismiss
-
-    }
-
-    //This is the number of pixels that the width and height of the image will be allotted
-//Note that the number of pixels implies (but does not exclusively determine) the file size of the image
-    private int REQUIRED_SIZE = 720;
-    //Method allows image files to be compressed to a standard maximum size
-    public void saveBitmapToFile(){
-
-        try {
-            imageUri=selectedImageUri;
-            imageFile=new File(selectedImageUri.getPath());
-            Toast.makeText(ListItemActivity.this, "2-before image is reduced to lower res!"+imageUri, Toast.LENGTH_LONG).show();
-
-            //suggested using this line but not sure how to use it
-           // InputStream inputStream = getContentResolver().openInputStream(imageUri);
-
-            //Initialize BitmapFactory options to downsize the image
-            BitmapFactory.Options o = new BitmapFactory.Options();
-            //Image dimensions do not change with change in pixel density
-            o.inJustDecodeBounds = true;
-
-            //Retrieve file and decode into bitmap, then close the stream when decode complete
-            FileInputStream inputStream = new FileInputStream(imageFile);
-            BitmapFactory.decodeStream(inputStream, null, o);
-            inputStream.close();
-
-            //Start with 1:1 scale size
-            int scale = 1;
-
-            while (o.outWidth / scale / 2 >= REQUIRED_SIZE && o.outHeight / scale / 2 >= REQUIRED_SIZE) {
-                //Find the correct scale value. It should be the power of 2.
-                scale *= 2;
-            }
-            Toast.makeText(ListItemActivity.this, "3-before image is reduced to lower res!", Toast.LENGTH_LONG).show();
-
-            //Create new Bitmap options instance to adjust the image scale...(1/2)
-            BitmapFactory.Options o2 = new BitmapFactory.Options();
-            o2.inSampleSize = scale;
-            //...then apply with new input stream
-            //InputStream inputStream = getContentResolver().openInputStream(uri);
-            inputStream = new FileInputStream(imageFile);
-            Bitmap selectedBitmap = BitmapFactory.decodeStream(inputStream, null, o2);
-            inputStream.close();
-
-            Toast.makeText(ListItemActivity.this, "4-before image is reduced to lower res!", Toast.LENGTH_LONG).show();
-
-            //Overwrite original file (type 'File') then compress the output file
-            imageFile.createNewFile();
-            FileOutputStream outputStream = new FileOutputStream(imageFile);
-            selectedBitmap.compress(Bitmap.CompressFormat.JPEG, 100, outputStream);
-
-            //maxImageSize is arbitrary file size (byte) limit
-            if(imageFile.length() < maxImageSize) {
-
-                //Set image in place and get the uri
-               // imagePost.setImageURI(imageUri); original
-               // String path = MediaStore.Images.Media.insertImage(ListItemActivity.this.getContentResolver(), imageFile, imageFileName, null);
-                imageUri = Uri.parse(picturePath);
-
-
-                IVPreviewImage.setImageURI(imageUri);
-                Toast.makeText(ListItemActivity.this, "Your image is reduced to lower res!", Toast.LENGTH_LONG).show();
-
-                //Reset in case decreased previously
-                REQUIRED_SIZE = 720;
-
-            } else {
-
-                Toast.makeText(ListItemActivity.this, "Your image is " + (imageFile.length() - maxImageSize) / 1000 + "kb too large to upload. Reattempting...", Toast.LENGTH_LONG).show();
-                REQUIRED_SIZE = REQUIRED_SIZE - 240;
-
-                //Loop method until goal file size achieved
-                saveBitmapToFile();
-            }
-
-        } catch (Exception ignored) {
-            System.out.println("image resolution error exception:"+ignored);
-            Toast.makeText(ListItemActivity.this, "Exception ignored!", Toast.LENGTH_LONG).show();
-        }
-
-    }
-
-    @Override
-    public void onSaveInstanceState(Bundle savedInstanceState) {
-        savedInstanceState.putInt("currentIndex",selectedItemIndex);
-        savedInstanceState.putString("TESTNOTES",TESTNOTES);
-        // Always call the superclass so it can save the view hierarchy state
-        super.onSaveInstanceState(savedInstanceState);
-    }
-}
-
-/*
-* package com.streamliners.myecomadmin;
-
-public class MainActivity extends AppCompatActivity {
-
-    public static int RC_PHOTO_PICKER = 0;
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-    }
-
-  public void openSomeActivityForResult(View view) {
-    ActivityResultLauncher<Intent> someActivityResultLauncher = registerForActivityResult(
-          new ActivityResultContracts.StartActivityForResult(),
-          new ActivityResultCallback<ActivityResult>() {
-              @Override
-              public void onActivityResult(ActivityResult result) {
-                  if (result.getResultCode() == Activity.RESULT_OK) {
-                      // There are no request codes
-                      Intent data = result.getData();
-                      Uri uri = data.getData();
-                      ImageView imageView = R.id.img;
-                      imageView.setImageURI(uri);
-                  }
-              }
-          });
-
+    public void openGalleryForImage(View view) {
         //Create Intent
         Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
         intent.setType("image/jpg");
         intent.putExtra(Intent.EXTRA_LOCAL_ONLY, true);
         //Launch activity to get result
-        someActivityResultLauncher.launch(intent);
-  }
+        openGalleryForImageResultLauncher.launch(intent);
+    }
 
+    // this function is triggered when user
+    // selects the image from the imageChooser
+    private void savetoObj(int selectedItemIndex) {
+
+        // saving UI info to the obj
+        Toast.makeText(this, " Info being saved:"+selectedItemIndex+finding+recomendation+notes, Toast.LENGTH_SHORT).show();
+        try {
+            // taking input edits from user inputtextfields and save to obj
+            myApp.getInstance().getChecklist().listItem.get(selectedItemIndex).setNotes(notes);
+            myApp.getInstance().getChecklist().listItem.get(selectedItemIndex).setRecommendations(recomendation);
+            myApp.getInstance().getChecklist().listItem.get(selectedItemIndex).setFindings(finding);
+            myApp.getInstance().getChecklist().listItem.get(selectedItemIndex).setItemStatus(ItemStatus);
+            myApp.getInstance().getChecklist().listItem.get(selectedItemIndex).setProblemPic(problemPic);
+
+
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+         //instead of dissmiss call listernet to call back to notify and refresh activity ..after call listner dismiss
+
+    }
+    @Override
+    public void onSaveInstanceState(Bundle savedInstanceState) {
+        savedInstanceState.putInt("currentIndex",selectedItemIndex);
+
+        // Always call the superclass so it can save the view hierarchy state
+        super.onSaveInstanceState(savedInstanceState);
+    }
 }
-*
-*
-*   //  void imageChooser1(){
-//
-//        I launch the activities like this:
-//
-//        Intent photoIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
-//        launchCameraAndGalleryActivity.launch(photoIntent );
-//
-//        Intent galleryIntent= new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-//        launchCameraActivity.launch(galleryIntent);
-//
-//    }
-* */

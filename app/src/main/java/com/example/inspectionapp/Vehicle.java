@@ -91,6 +91,20 @@ public class Vehicle {
     public void setPlate(String plate) {
         this.plate = plate;
     }
+
+    @Override
+    public String toString() {
+        return "Vehicle{" +
+                "uid=" + uid +
+                ", vin='" + vin + '\'' +
+                ", make='" + make + '\'' +
+                ", model='" + model + '\'' +
+                ", mileagein='" + mileagein + '\'' +
+                ", mileageout='" + mileageout + '\'' +
+                ", testdrive='" + testdrive + '\'' +
+                ", plate='" + plate + '\'' +
+                '}';
+    }
 }
 
 

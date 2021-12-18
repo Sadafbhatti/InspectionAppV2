@@ -1,10 +1,27 @@
 package com.example.inspectionapp;
 
+import androidx.annotation.NonNull;
+import androidx.room.ColumnInfo;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
+@Entity(tableName = "customer")
 public class Customer {
+    //Primary key
+    @PrimaryKey(autoGenerate = true)
+    @NonNull
+    private int key;
+
+    @ColumnInfo(name = "name")
     String custName;
+    @ColumnInfo(name = "phone")
     String custPhone;
+    @ColumnInfo(name = "email")
     String custEmail;
+    @ColumnInfo(name = "reason")
     String custReasonForInspection;
+
+
 
     Customer(){
 
@@ -15,6 +32,12 @@ public class Customer {
         this.custEmail = custEmail;
         this.custReasonForInspection = custReasonForInspection;
     }
+
+    public int getKey() {
+        return key;
+    }
+    public void setKey(int key) { this.key=key; }
+
 
     public String getCustName() {
         return custName;
@@ -48,5 +71,13 @@ public class Customer {
         this.custReasonForInspection = custReasonForInspection;
     }
 
-
+    @Override
+    public String toString() {
+        return "Customer{" +
+                "custName='" + custName + '\'' +
+                ", custPhone='" + custPhone + '\'' +
+                ", custEmail='" + custEmail + '\'' +
+                ", custReasonForInspection='" + custReasonForInspection + '\'' +
+                '}';
+    }
 }

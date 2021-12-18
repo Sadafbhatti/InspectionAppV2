@@ -94,6 +94,16 @@ public class Shop {
         this.shopAddress = shopAddress;
     }
 
-
-
+    @Override
+    public String toString() {
+        return "Shop{" +
+                "shopName='" + shopName + '\'' +
+                ", technName='" + technName + '\'' +
+                ", inspectionDate='" + inspectionDate + '\'' +
+                ", shopEmail='" + shopEmail + '\'' +
+                ", shopPhone='" + shopPhone + '\'' +
+                ", shopAddress='" + shopAddress + '\'' +
+                ", pattern='" + pattern + '\'' +
+                '}';
+    }
 }

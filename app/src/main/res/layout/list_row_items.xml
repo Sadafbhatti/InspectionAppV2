@@ -1,43 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+xmlns:app="http://schemas.android.com/apk/res-auto"
+xmlns:tools="http://schemas.android.com/tools"
+android:layout_width="match_parent"
+android:layout_height="match_parent">
 
 
-    <!--Creating a TextView-->
+<!--Creating a TextView-->
 
-    <!--Creating a Button-->
-    <TextView
-        android:id="@+id/txtItemName"
-        android:layout_width="295dp"
-        android:layout_height="wrap_content"
-        android:layout_toLeftOf="@+id/btnStatus"
-        android:gravity="left"
-        android:paddingBottom="20dp"
-        android:text="@string/text_view"
-        android:textColor="#000000"
-        android:textSize="16sp"
-        app:flow_horizontalStyle="packed"
-        app:layout_constraintBottom_toBottomOf="@+id/btnStatus"
-        app:layout_constraintStart_toStartOf="parent" />
+<!--Creating a Button-->
+<TextView
+    android:id="@+id/txtItemName"
+    android:layout_width="295dp"
+    android:layout_height="wrap_content"
+    android:layout_toLeftOf="@+id/btnStatus"
+    android:gravity="left"
+    android:paddingBottom="20dp"
+    android:text="@string/text_view"
+    android:textColor="#000000"
+    android:textSize="16sp"
+    app:flow_horizontalStyle="packed"
+    app:layout_constraintBottom_toBottomOf="@+id/btnStatus"
+    app:layout_constraintStart_toStartOf="parent" />
 
-    <Button
-        android:id="@+id/btnStatus"
-        android:layout_width="72dp"
-        android:layout_height="58dp"
-        android:focusable="false"
-        android:layout_alignParentEnd="true"
-        android:background="@color/MediumSeaGreen"
-        android:outlineAmbientShadowColor="@color/purple_200"
-        android:scaleType="fitCenter"
-        android:text="@string/status"
-        android:textSize="12dp"
-        android:textColor="#311B92"
-        app:backgroundTint="@color/MediumSeaGreen"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/txtItemName"
-        app:layout_constraintTop_toTopOf="parent" />
+<Button
+    android:id="@+id/btnStatus"
+    android:layout_width="72dp"
+    android:layout_height="58dp"
+    android:focusable="false"
+    android:layout_alignParentEnd="true"
+    android:background="@color/MediumSeaGreen"
+    android:outlineAmbientShadowColor="@color/purple_200"
+    android:scaleType="fitCenter"
+    android:text="@string/status"
+    android:textSize="12dp"
+    android:textColor="#311B92"
+    app:backgroundTint="@color/MediumSeaGreen"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toEndOf="@+id/txtItemName"
+    app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

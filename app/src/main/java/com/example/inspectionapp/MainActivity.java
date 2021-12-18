@@ -24,6 +24,13 @@ public class MainActivity extends AppCompatActivity {
     public void startClicked(View view) {
         Intent toVehicleInput = new Intent(getApplicationContext(),VehicleActivity.class);
         startActivity(toVehicleInput);
+
     }
 
+    public void roomdbClicked(View view) {
+
+        Intent intent = new Intent(getApplicationContext(), MainActivity2.class);
+        startActivity(intent);
+
+    }
 }

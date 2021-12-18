@@ -14,6 +14,9 @@ public class ListItem implements Parcelable {
     String notes;
     Bitmap problemPic;
     String itemStatus;
+    //save image into room and get it from table with my queries
+    //with help of db help manager ..getALL from database in oncraete instead of setcontent to methods.
+  // save to db with insert new row to db using the DAO method
     //public ArrayList<ListItem> listItem;
 
 
@@ -139,10 +142,16 @@ public class ListItem implements Parcelable {
         this.problemPic = problemPic;
     }
 
-
     @Override
     public String toString() {
-        return  ""+ itemName;
-
+        return "ListItem{" +
+                "itemID='" + itemID + '\'' +
+                ", itemName='" + itemName + '\'' +
+                ", findings='" + findings + '\'' +
+                ", recommendations='" + recommendations + '\'' +
+                ", notes='" + notes + '\'' +
+                ", problemPic=" + problemPic +
+                ", itemStatus='" + itemStatus + '\'' +
+                '}';
     }
 }
